@@ -10,17 +10,17 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Send Slack Notification
         run: |
-          COMMIT_LIST=$(git log ${{ github.event.before }}..${{ github.sha }} \
-            --pretty=format:"• %s\n  by %an")
-
-          COMMIT_URL="https://github.com/${{ github.repository }}/commits/${{ github.ref_name }}"
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          AUTHOR_NAME=$(git log -1 --pretty=%an)
+          COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
           curl -X POST -H "Content-type: application/json" \
           --data "{
-            \"text\": \"${COMMIT_LIST}\n\n<${COMMIT_URL}|전체 커밋 보기>\"
+            \"text\": \"*${COMMIT_MSG}*\nby ${AUTHOR_NAME}\n<${COMMIT_URL}|커밋 보기>\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
