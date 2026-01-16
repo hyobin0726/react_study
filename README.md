@@ -1,2 +1,2 @@
 # react_study
-slack testz
+slack test
