@@ -21,6 +21,6 @@ jobs:
 
           curl -X POST -H "Content-type: application/json" \
           --data "{
-            \"text\": \"📝 *${COMMIT_MSG}*\nby ${AUTHOR_NAME}\n<${COMMIT_URL}|커밋 보기>\"
+            \"text\": \"*${COMMIT_MSG}*\nby ${AUTHOR_NAME}\n<${COMMIT_URL}|커밋 보기>\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
